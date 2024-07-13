@@ -8,7 +8,7 @@ const dataSourceOptions: DataSourceOptions = {
 	host: "localhost",
 	port: 5432,
 	username: "postgres",
-	password: "rjkmn2123",
+	password: process.env.PASSWORD,
 	database: "ideas",
 	schema: "public",
 	entities: [Idea],
