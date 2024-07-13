@@ -3,14 +3,18 @@ POST http://localhost:8000/createIdea
 Content-Type: application/json
 
 {
-	"title": "consume quas",
-	"type": "existence",
-	"status": "ongoing",
+	"title": "test 4",
+	"type": "Study",
+	"status": "Fresh",
 	"when": null
 }
 
+### Get Ideas
+GET  http://localhost:8000/getIdeas/test
+Content-Type: application/json
+
 ### Get All Ideas
-GET  http://localhost:8000/getIdeas/ongoing
+GET  http://localhost:8000/getAllIdeas
 Content-Type: application/json
 
 ### Change Idea Status
@@ -21,4 +25,31 @@ Content-Type: application/json
 	"id": 1,
 	"status": "fullfilled",
 	"completionTime": "Thu Jul 11 2024 21:47:01 GMT+03:00 (Eastern European Summer Time)"
+}
+
+### Store ideas
+POST http://localhost:8000/storeIdeas
+Content-Type: application/json
+
+{
+	"ideas": [
+	{
+	"title": "test title",
+	"type": "test type",
+	"status": "test",
+	"when": null
+	},
+	{
+	"title": "test title",
+	"type": "test type",
+	"status": "test",
+	"when": null
+	},
+	{
+	"title": "test title",
+	"type": "test type",
+	"status": "test",
+	"when": null
+	}
+	]
 }

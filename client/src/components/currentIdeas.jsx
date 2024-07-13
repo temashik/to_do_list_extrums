@@ -2,43 +2,66 @@ import { Typography } from "@mui/material";
 import { useState } from "react";
 import Slider from "react-slick";
 import IdeaCard from "./ideaCard";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 import "../index.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 function CurrentIdeas() {
 	const [activeSlide, setActiveSlide] = useState(1);
+	const ideas = useSelector((state) => state.ideasSlice.ideas);
+	const ongoingIdeas = ideas.filter((idea) => idea.status === "Ongoing");
+	console.log(ongoingIdeas);
+	const isLoading = useSelector((state) => state.ideasSlice.isLoading);
 	const sliderSettings = {
 		dots: true,
-		infinite: true,
+		infinite: ongoingIdeas.length > 1,
 		className: "center",
 		centerMode: true,
-		centerPadding: "60px",
+		centerPadding: 0,
 		speed: 500,
-		slidesToShow: 3,
+		slidesToShow: ongoingIdeas.length > 3 ? 3 : ongoingIdeas.length,
 		slidesToScroll: 1,
 		beforeChange: (current, next) => {
 			setActiveSlide(next + 1);
 		},
-		appendDots: (dots) => <p>{activeSlide}/4</p>,
+		appendDots: (dots) => (
+			<p>
+				{activeSlide}/{ongoingIdeas.length}
+			</p>
+		),
 	};
+	useEffect(() => {
+		console.log("current", sliderSettings);
+		console.log(ongoingIdeas.length);
+	}, [ideas]);
 	return (
 		<>
 			<Typography variant="h4" align="center">
 				Ideas in my list
 			</Typography>
-			<Slider {...sliderSettings}>
-				<IdeaCard idea={"do 10 pushups"} category={"sport"} />
-				<IdeaCard
-					idea={'watch "50 days in Mariupol"'}
-					category={"culture"}
-				/>
-				<IdeaCard idea={"learn about React"} category={"study"} />
-				<IdeaCard
-					idea={"complete daily commisions in Genshin Impact"}
-					category={"recreational"}
-				/>
-			</Slider>
+			{ongoingIdeas === null || ongoingIdeas.length < 1 ? (
+				<p align="center">No current ideas</p>
+			) : isLoading ? (
+				<p align="center">Loading</p>
+			) : (
+				<div className="slide-container">
+					<Slider {...sliderSettings}>
+						{ongoingIdeas.map((idea, index) => {
+							return (
+								<IdeaCard
+									idea={idea}
+									activeSlide={activeSlide}
+									index={index + 1}
+									ideasLength={ongoingIdeas.length}
+									key={idea.type + index}
+								/>
+							);
+						})}
+					</Slider>
+				</div>
+			)}
 		</>
 	);
 }

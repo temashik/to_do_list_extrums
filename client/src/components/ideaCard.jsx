@@ -6,35 +6,69 @@ import {
 	Box,
 	Divider,
 } from "@mui/material";
+import { changeIdeaStatus } from "../redux/slices/ideasSlice";
+import { useDispatch } from "react-redux";
+import "../index.css";
 
 function IdeaCard(props) {
+	const dispatch = useDispatch();
+	let paddingLeft =
+		props.ideasLength >= 3
+			? "15%"
+			: props.ideasLength === 2
+			? "25%"
+			: "38%";
 	const card = (
 		<CardActionArea>
-			<CardContent>
-				<Typography variant="h6">{props.title}</Typography>
-				<Divider
-					varian="fullWidth"
-					sx={{
-						borderStyle: "dashed",
-						borderWidth: "1px",
-						borderColor: "black",
-					}}
-				/>
-				<Typography
-					sx={{ fontSize: 14 }}
-					color="text.secondary"
-					gutterBottom
-				>
-					{props.type}
+			<CardContent sx={{ height: "100px" }}>
+				<Typography variant="h6">
+					{props.idea.title.length > 28
+						? props.idea.title.slice(0, 27) + "..."
+						: props.idea.title}
 				</Typography>
+				{!props.activeSlide ||
+				!props.index ||
+				props.activeSlide === props.index ? (
+					<div className="footer">
+						<Divider
+							variant="fullWidth"
+							sx={{
+								borderStyle: "dashed",
+								borderWidth: "1px",
+								borderColor: "black",
+							}}
+						/>
+						<Typography
+							sx={{ fontSize: 14 }}
+							color="text.secondary"
+							gutterBottom
+						>
+							{props.idea.type}
+						</Typography>
+					</div>
+				) : null}
 			</CardContent>
 		</CardActionArea>
 	);
 	return (
-		<Box sx={{ minWidth: 100 }}>
+		<Box
+			sx={{
+				minWidth: 100,
+				margin: "0 auto",
+				paddingLeft: paddingLeft,
+				textAlign: "center",
+				position: "relative",
+			}}
+		>
 			<Card
 				variant="elevation"
-				sx={{ maxWidth: 200, textAlign: "center", textWrap: "pretty" }}
+				sx={{
+					width: "200px",
+					textAlign: "center",
+					textWrap: "pretty",
+					backgroundColor: "#e4c1f9",
+				}}
+				onClick={() => dispatch(changeIdeaStatus(props.idea))}
 			>
 				{card}
 			</Card>

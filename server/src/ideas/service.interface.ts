@@ -3,7 +3,9 @@ import { IdeaDto } from "./dto";
 
 export interface IIdeaService {
 	createIdea: (dto: IdeaDto) => Promise<Idea | null>;
-	getAllIdeas: (status: string) => Promise<Idea[]>;
+	storeIdeas: (entities: Idea[]) => Promise<boolean>;
+	// getAllIdeas: (status: string) => Promise<Idea[]>;
+	getAllIdeas: () => Promise<Idea[]>;
 	changeIdeaStatus: (
 		id: number,
 		status: string,

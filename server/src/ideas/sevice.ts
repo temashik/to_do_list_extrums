@@ -24,17 +24,40 @@ export class IdeaService implements IIdeaService {
 		newIdea.when = when;
 		try {
 			const result = await repo.save(newIdea);
-			console.log("created... ", result);
 			return result;
 		} catch (e) {
 			return null;
 		}
 	}
 
-	async getAllIdeas(status: string): Promise<Idea[]> {
+	async storeIdeas(entities: Idea[]): Promise<boolean> {
 		const repo = ds.getRepository(Idea);
-		const result = await repo.find({ where: { status } });
-		console.log(result[0].id);
+		// const insertEntities = entities.map((entity) => {
+		// 	const newIdea = new Idea();
+		// 	if (entity.id)
+		// 	newIdea.title = entity.title;
+		// 	newIdea.type = entity.type;
+		// 	newIdea.status = entity.status;
+		// 	newIdea.when = entity.when;
+		// 	return newIdea;
+		// });
+		try {
+			await repo.save(entities);
+			return true;
+		} catch (e) {
+			return false;
+		}
+	}
+
+	// async getAllIdeas(status: string): Promise<Idea[]> {
+	// 	const repo = ds.getRepository(Idea);
+	// 	const result = await repo.find({ where: { status } });
+	// 	return result;
+	// }
+
+	async getAllIdeas(): Promise<Idea[]> {
+		const repo = ds.getRepository(Idea);
+		const result = await repo.find();
 		return result;
 	}
 
@@ -50,7 +73,6 @@ export class IdeaService implements IIdeaService {
 		if (ideaToUpdate === null) return null;
 		ideaToUpdate.when = completionTime;
 		ideaToUpdate.status = status;
-		console.log(ideaToUpdate);
 		const result = await repo.save(ideaToUpdate);
 		return result;
 	}

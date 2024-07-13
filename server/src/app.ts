@@ -6,6 +6,7 @@ import "dotenv/config";
 import { TYPES } from "./types";
 import { IdeaController } from "./ideas/controller";
 import { ds } from "./data.source";
+import cors from "cors";
 import { DataSource } from "typeorm";
 
 @injectable()
@@ -24,6 +25,7 @@ export class App {
 	}
 
 	useMiddleware(): void {
+		this.app.use(cors({ origin: true }));
 		this.app.use(json());
 		this.app.use(urlencoded({ extended: false }));
 	}

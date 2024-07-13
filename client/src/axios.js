@@ -18,8 +18,18 @@ export async function createIdea(title, type) {
 	return data;
 }
 
-export async function getAllIdeas(status) {
-	const { data } = await instance.get(`/getIdeas/${status}`);
+export async function storeIdeas(ideas) {
+	const { data } = await instance.post("/storeIdeas", { ideas	});
+	return data;
+}
+
+// export async function getAllIdeas(status) {
+// 	const { data } = await instance.get(`/getIdeas/${status}`);
+// 	return data;
+// }
+
+export async function getAllIdeas() {
+	const { data } = await instance.get('/getAllIdeas');
 	return data;
 }
 

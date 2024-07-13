@@ -4,15 +4,26 @@ import CurrentIdeas from "./components/currentIdeas";
 import Achievements from "./components/achievements";
 import CompletedChallanges from "./components/completedChallanges";
 import ButtonsGroup from "./components/buttons";
+import { getIdeas } from "./redux/slices/ideasSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
 
 function App() {
+	const ideas = useSelector((state) => state.ideasSlice.ideas);
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(getIdeas());
+	}, []);
+	useEffect(() => {
+		console.log("rerender");
+	}, [ideas]);
 	return (
 		<>
 			<Container maxWidth="md">
 				<Stack direction="column" spacing={4}>
 					<FreshIdeas />
 					<Divider
-						varian="fullWidth"
+						variant="fullWidth"
 						sx={{
 							borderStyle: "dashed",
 							borderWidth: "1px",
@@ -21,24 +32,16 @@ function App() {
 					/>
 					<CurrentIdeas />
 					<Divider
-						varian="fullWidth"
+						variant="fullWidth"
 						sx={{
 							borderStyle: "dashed",
 							borderWidth: "1px",
 							borderColor: "black",
 						}}
 					/>
-					<Achievements
-						data={[
-							{ score: 1, category: "Recreational" },
-							{ score: 4, category: "Education" },
-							{ score: 0, category: "Sport" },
-							{ score: 2, category: "Social" },
-							{ score: 2, category: "Social" },
-						]}
-					/>
+					<Achievements />
 					<Divider
-						varian="fullWidth"
+						variant="fullWidth"
 						sx={{
 							borderStyle: "dashed",
 							borderWidth: "1px",

@@ -1,12 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit"
-import FreshIdeasSlice from "./slices/freshIdeasSlice";
-import OngoingIdeasSlice from "./slices/ongoingIdeasSlice";
-import FinishedIdeasSlice from "./slices/finishedIdeasSlice";
+import IdeasSlice from "./slices/ideasSlice";
 
 export const store = configureStore({
 	reducer: {
-		freshIdeas: FreshIdeasSlice,
-		ongoingIdeas: OngoingIdeasSlice,
-		finishedIdeas: FinishedIdeasSlice,
-	}
+		ideasSlice: IdeasSlice,
+	},
 });

@@ -14,10 +14,16 @@ export class IdeaController extends BaseContorller implements IIdeaController {
 		super();
 		this.bindRoutes([
 			{ path: "/createIdea", method: "post", func: this.createIdea },
+			{ path: "/storeIdeas", method: "post", func: this.storeIdeas },
 			{
 				path: "/getIdeas/:status",
 				method: "get",
 				func: this.getIdeas,
+			},
+			{
+				path: "/getAllIdeas",
+				method: "get",
+				func: this.getAllIdeas,
 			},
 			{
 				path: "/changeStatus",
@@ -35,11 +41,20 @@ export class IdeaController extends BaseContorller implements IIdeaController {
 		res.json({ newIdea });
 	}
 
+	async storeIdeas(req: Request, res: Response): Promise<void> {
+		const result = await this.ideaService.storeIdeas(req.body.ideas);
+		console.log("store ideas ", result);
+	}
+
 	async getIdeas(req: Request, res: Response): Promise<void> {
-		const status = req.params.status;
-		const allIdeas = await this.ideaService.getAllIdeas(status);
-		console.log("Controller get all ", allIdeas);
-		res.json({ allIdeas });
+		// const status = req.params.status;
+		// const allIdeas = await this.ideaService.getAllIdeas(status);
+		// res.json({ allIdeas });
+	}
+
+	async getAllIdeas(req: Request, res: Response): Promise<void> {
+		const allIdeas = await this.ideaService.getAllIdeas();
+		res.json(allIdeas);
 	}
 
 	async changeIdeaStatus(req: Request, res: Response): Promise<void> {
@@ -48,7 +63,6 @@ export class IdeaController extends BaseContorller implements IIdeaController {
 			req.body.status,
 			req.body.completionTime
 		);
-		console.log("Controller change ", changedIdea);
 		res.json({ changedIdea });
 	}
 }
