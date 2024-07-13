@@ -18,9 +18,13 @@ function IdeaCard(props) {
 			: props.ideasLength === 2
 			? "25%"
 			: "38%";
+	let height =
+		!props.activeSlide || !props.index || props.activeSlide === props.index
+			? "100px"
+			: "50px";
 	const card = (
 		<CardActionArea>
-			<CardContent sx={{ height: "100px" }}>
+			<CardContent sx={{ height: height }}>
 				<Typography variant="h6">
 					{props.idea.title.length > 28
 						? props.idea.title.slice(0, 27) + "..."
