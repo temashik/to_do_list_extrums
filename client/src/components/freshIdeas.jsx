@@ -2,7 +2,6 @@ import { Typography } from "@mui/material";
 import IdeaCard from "./ideaCard";
 import Slider from "react-slick";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
 import "../index.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -22,10 +21,6 @@ function FreshIdeas() {
 		slidesToScroll: 1,
 		arrows: false,
 	};
-	useEffect(() => {
-		console.log("fresh", sliderSettings);
-		console.log(freshIdeas.length);
-	}, [ideas]);
 	return (
 		<>
 			<Typography variant="h4" align="center">

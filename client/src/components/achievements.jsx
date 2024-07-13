@@ -1,11 +1,9 @@
 import { Typography } from "@mui/material";
 import { useSelector } from "react-redux";
-import { recalculateAchievements } from "../redux/slices/ideasSlice";
 import "../index.css";
 
 function Achievements() {
 	const achievements = useSelector((state) => state.ideasSlice.achievements);
-	// const achievementsEntries = Object.entries(achievements);
 	const isLoading = useSelector((state) => state.ideasSlice.isLoading);
 	return (
 		<div className="flex-container">

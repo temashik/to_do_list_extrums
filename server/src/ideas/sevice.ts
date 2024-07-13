@@ -32,15 +32,6 @@ export class IdeaService implements IIdeaService {
 
 	async storeIdeas(entities: Idea[]): Promise<boolean> {
 		const repo = ds.getRepository(Idea);
-		// const insertEntities = entities.map((entity) => {
-		// 	const newIdea = new Idea();
-		// 	if (entity.id)
-		// 	newIdea.title = entity.title;
-		// 	newIdea.type = entity.type;
-		// 	newIdea.status = entity.status;
-		// 	newIdea.when = entity.when;
-		// 	return newIdea;
-		// });
 		try {
 			await repo.save(entities);
 			return true;
@@ -49,31 +40,9 @@ export class IdeaService implements IIdeaService {
 		}
 	}
 
-	// async getAllIdeas(status: string): Promise<Idea[]> {
-	// 	const repo = ds.getRepository(Idea);
-	// 	const result = await repo.find({ where: { status } });
-	// 	return result;
-	// }
-
 	async getAllIdeas(): Promise<Idea[]> {
 		const repo = ds.getRepository(Idea);
 		const result = await repo.find();
-		return result;
-	}
-
-	async changeIdeaStatus(
-		id: number,
-		status: string,
-		completionTime: Date
-	): Promise<Idea | null> {
-		const repo = ds.getRepository(Idea);
-		const ideaToUpdate = await repo.findOneBy({
-			id,
-		});
-		if (ideaToUpdate === null) return null;
-		ideaToUpdate.when = completionTime;
-		ideaToUpdate.status = status;
-		const result = await repo.save(ideaToUpdate);
 		return result;
 	}
 }

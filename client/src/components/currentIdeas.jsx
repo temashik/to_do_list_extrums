@@ -3,7 +3,6 @@ import { useState } from "react";
 import Slider from "react-slick";
 import IdeaCard from "./ideaCard";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
 import "../index.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -12,7 +11,6 @@ function CurrentIdeas() {
 	const [activeSlide, setActiveSlide] = useState(1);
 	const ideas = useSelector((state) => state.ideasSlice.ideas);
 	const ongoingIdeas = ideas.filter((idea) => idea.status === "Ongoing");
-	console.log(ongoingIdeas);
 	const isLoading = useSelector((state) => state.ideasSlice.isLoading);
 	const sliderSettings = {
 		dots: true,
@@ -32,10 +30,6 @@ function CurrentIdeas() {
 			</p>
 		),
 	};
-	useEffect(() => {
-		console.log("current", sliderSettings);
-		console.log(ongoingIdeas.length);
-	}, [ideas]);
 	return (
 		<>
 			<Typography variant="h4" align="center">
